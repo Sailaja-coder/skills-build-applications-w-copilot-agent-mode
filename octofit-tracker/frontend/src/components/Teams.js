@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
-const Workouts = () => {
-  const [workouts, setWorkouts] = useState([]);
-  const apiUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
+const Teams = () => {
+  const [teams, setTeams] = useState([]);
+  const apiUrl = "http://localhost:8000/api/teams/";
 
   useEffect(() => {
-    console.log('Fetching workouts from:', apiUrl);
+    console.log('Fetching teams from:', apiUrl);
     fetch(apiUrl)
       .then(res => res.json())
       .then(data => {
         const results = data.results || data;
-        setWorkouts(results);
-        console.log('Fetched workouts:', results);
+        setTeams(results);
+        console.log('Fetched teams:', results);
       })
-      .catch(err => console.error('Error fetching workouts:', err));
+      .catch(err => console.error('Error fetching teams:', err));
   }, [apiUrl]);
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-3">Workouts</h2>
+      <h2 className="mb-3">Teams</h2>
       <table className="table table-striped table-bordered">
         <thead className="table-dark">
           <tr>
             <th>#</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Suggested For</th>
           </tr>
         </thead>
         <tbody>
-          {workouts.map((workout, idx) => (
+          {teams.map((team, idx) => (
             <tr key={idx}>
               <td>{idx + 1}</td>
-              <td>{workout.name}</td>
-              <td>{workout.description}</td>
-              <td>{workout.suggested_for}</td>
+              <td>{team.name}</td>
+              <td>{team.description}</td>
             </tr>
           ))}
         </tbody>
@@ -43,4 +41,4 @@ const Workouts = () => {
   );
 };
 
-export default Workouts;
+export default Teams;
